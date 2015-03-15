@@ -1,0 +1,23 @@
+h1 Todos
+
+form method="post" action="#{create_path}"
+  input type="text" name="title" placeholder="learn lotus"
+  input type="submit" value="Add"
+
+- if todos.any?
+  p #{todos_count} on the list
+  ul
+  - todos.each do |todo|
+    li
+      span class=todo.element_class = todo.title
+
+      - unless todo.done?
+        form method="post" action="#{complete_path(todo.id)}"
+          input type="hidden" name="_method" value="patch"
+          input type="submit" value="Mark as done"
+
+      form method="post" action="#{delete_path(todo.id)}"
+        input type="hidden" name="_method" value="delete"
+        input type="submit" value="Remove"
+- else
+  p Nothing todo, take a rest.
